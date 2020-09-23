@@ -92,12 +92,21 @@ namespace GeneralStore.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var oldTransaction = _db.Transactions.AsNoTracking().Where(P => P.TransactionId == transaction.TransactionId).FirstOrDefault();
-                //int oldTransaction = _db.Transactions.Find(transaction.TransactionId).ItemCount;
-                Product product = _db.Products.Find(transaction.ProductId);
-                product.InventoryCount += oldTransaction.ItemCount;
+                Product oldProduct = _db.Products.Find(oldTransaction.ProductId);
+                oldProduct.InventoryCount += oldTransaction.ItemCount;
+
                 _db.Entry(transaction).State = System.Data.Entity.EntityState.Modified;
-                product.InventoryCount -= transaction.ItemCount;
-                if (product.InventoryCount < 0) return HttpNotFound("There isn't enough product for this purchase");
+
+                Product finalProduct;
+                if (oldTransaction.ProductId == transaction.ProductId)
+                    finalProduct = oldProduct;
+                else
+                   finalProduct = _db.Products.Find(transaction.ProductId);
+
+                finalProduct.InventoryCount -= transaction.ItemCount;
+                if (finalProduct.InventoryCount < 0) 
+                    return HttpNotFound("There isn't enough product for this purchase");
+                
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
