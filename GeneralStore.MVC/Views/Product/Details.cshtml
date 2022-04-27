@@ -1,4 +1,4 @@
-﻿@model GeneralStore.MVC.Models.Product
+﻿@model GeneralStore.MVC.Models.ProductDetail
 
 @{
     ViewBag.Title = "Details";
@@ -41,8 +41,43 @@
         <dd>
             @Html.DisplayFor(model => model.IsFood)
         </dd>
-
     </dl>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Transactions.First().Customer.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transactions.First().ItemCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transactions.First().TimeOfPurchase)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Transactions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfPurchase)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit","Transaction",new { id = item.TransactionId },null) |
+                    @Html.ActionLink("Details", "Details","Transaction", new { id = item.TransactionId },null) |
+                    @Html.ActionLink("Delete", "Delete","Transaction", new { id = item.TransactionId },null)
+                </td>
+            </tr>
+        }
+
+    </table>
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |

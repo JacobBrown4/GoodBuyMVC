@@ -19,5 +19,7 @@ namespace GeneralStore.MVC.Models
  
         [Display(Name = "Full Name")]
         public string FullName { get { return $"{FirstName} {LastName}"; } }
+
+        public virtual List<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }

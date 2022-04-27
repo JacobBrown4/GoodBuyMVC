@@ -95,7 +95,16 @@ namespace GeneralStore.MVC.Controllers
 
             if (product == null) return HttpNotFound();
 
-            return View(product);
+            ProductDetail detail = new ProductDetail()
+            {
+                ProductId = product.ProductId,
+                Price = product.Price,
+                Transactions = product.Transactions.OrderBy(x=>x.TimeOfPurchase).ToList(),
+                Name = product.Name,
+                InventoryCount = product.InventoryCount
+            };
+
+            return View(detail);
         }
     }
 }

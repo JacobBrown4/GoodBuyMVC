@@ -91,10 +91,16 @@ namespace GeneralStore.MVC.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             Customer customer = _db.Customers.Find(id);
-
             if (customer == null) return HttpNotFound();
 
-            return View(customer);
+
+            CustomerDetail details = new CustomerDetail()
+            {
+                FullName = customer.FullName,
+                CustomerId = customer.CustomerId,
+                Transactions = customer.Transactions.ToList()
+            };
+            return View(details);
         }
     }
 }
