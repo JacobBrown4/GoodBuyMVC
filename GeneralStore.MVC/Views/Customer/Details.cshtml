@@ -1,4 +1,4 @@
-﻿@model GeneralStore.MVC.Models.Customer
+﻿@model GeneralStore.MVC.Models.CustomerDetail
 
 @{
     ViewBag.Title = "Details";
@@ -11,30 +11,50 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.FullName)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.FullName)
         </dd>
-
     </dl>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Transactions.First().Product.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transactions.First().ItemCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transactions.First().TimeOfPurchase)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Transactions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfPurchase)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Transaction", new { id = item.TransactionId }, null) |
+                    @Html.ActionLink("Details", "Details", "Transaction", new { id = item.TransactionId }, null) |
+                    @Html.ActionLink("Delete", "Delete", "Transaction", new { id = item.TransactionId }, null)
+                </td>
+            </tr>
+        }
+
+    </table>
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerId }) |

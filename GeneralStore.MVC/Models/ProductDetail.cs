@@ -6,21 +6,17 @@ using System.Web;
 
 namespace GeneralStore.MVC.Models
 {
-    public class Product
+    public class ProductDetail
     {
-        [Key]
+
         public int ProductId { get; set; }
-        [Required]
         [Display(Name = "Product Name")]
         public string Name { get; set; }
-        [Required]
         [Display(Name = "# In Stock")]
         public int InventoryCount { get; set; }
-        [Required]
         public decimal Price { get; set; }
-        [Required]
-        [Display(Name ="It is food")]
+        [Display(Name = "It is food")]
         public bool IsFood { get; set; }
-        public virtual List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }
